@@ -204,13 +204,6 @@ LOGGING = {
             'filters': ['require_debug_false'],
             'class': 'django.utils.log.AdminEmailHandler'
         },
-        'file':{
-            'level': 'INFO',
-            #'class': 'logging.handlers.RotatingFileHandler',
-            'class': 'logging.handlers.WatchedFileHandler',
-            'filename': os.path.join(BASE_DIR, 'logs', 'mailmansuite.log'),
-            'formatter': 'verbose',
-        },
         'console': {
             'class': 'logging.StreamHandler',
             'formatter': 'simple',
@@ -218,22 +211,22 @@ LOGGING = {
     },
     'loggers': {
         'django.request': {
-            'handlers': ['mail_admins', 'file'],
+            'handlers': ['mail_admins'],
             'level': 'ERROR',
             'propagate': True,
         },
         'django': {
-            'handlers': ['file'],
+            'handlers': ['console'],
             'level': 'ERROR',
             'propagate': True,
         },
         'hyperkitty': {
-            'handlers': ['file'],
+            'handlers': ['console'],
             'level': 'DEBUG',
             'propagate': True,
         },
         'postorius': {
-            'handlers': ['console', 'file'],
+            'handlers': ['console'],
             'level': 'INFO',
         },
     },
@@ -245,10 +238,6 @@ LOGGING = {
             'format': '%(levelname)s %(message)s'
         },
     },
-    #'root': {
-    #    'handlers': ['file'],
-    #    'level': 'INFO',
-    #},
 }
 
 
@@ -275,9 +264,7 @@ POSTORIUS_TEMPLATE_BASE_URL = 'http://localhost:8000'
 
 if 'DJANGO_LOCAL_CONFIGURATION' in os.environ:
     filename = os.path.abspath(os.environ.get('DJANGO_LOCAL_CONFIGURATION'))
-    #print("os path: " + filename)
     if os.access(filename, os.R_OK):
         with open(filename) as config:
             code = compile(config.read(), filename, 'exec')
             exec(code, globals(), locals())
-#print("End...")
