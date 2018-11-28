@@ -273,8 +273,8 @@ FILTER_VHOST = False
 POSTORIUS_TEMPLATE_BASE_URL = 'http://localhost:8000'
 
 
-if 'DJANGO_LOCAL_CONFIGURATION_MAILLISTS' in os.environ:
-    filename = os.path.abspath(os.environ.get('DJANGO_LOCAL_CONFIGURATION_MAILLISTS'))
+if 'DJANGO_LOCAL_CONFIGURATION' in os.environ:
+    filename = os.path.abspath(os.environ.get('DJANGO_LOCAL_CONFIGURATION'))
     #print("os path: " + filename)
     if os.access(filename, os.R_OK):
         with open(filename) as config:
