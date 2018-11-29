@@ -224,6 +224,7 @@ SAML_CONFIG = {
 }
 
 AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
     'django_auth_ldap.backend.LDAPBackend',
     'djangosaml2.backends.Saml2Backend',
 )
