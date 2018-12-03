@@ -100,6 +100,11 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'mugmailinglists.wsgi.application'
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.dummy.DummyCache'
+    }
+}
 
 SAML_CREATE_UNKNOWN_USER = True
 SAML_ATTRIBUTE_MAPPING = {
@@ -353,9 +358,13 @@ COMPRESS_PRECOMPILERS = (
 # Asynchronous tasks
 #
 Q_CLUSTER = {
+    'name': 'DJRedis',
+    'workers': 4,
     'timeout': 300,
-    'save_limit': 100,
-    'orm': 'default',
+    'django_redis': 'default'
+    #'timeout': 300,
+    #'save_limit': 100,
+    #'orm': 'default',
 }
 
 # A sample logging configuration. The only tangible logging
