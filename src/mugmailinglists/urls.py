@@ -28,4 +28,8 @@ urlpatterns = [
     url(r'^accounts/', include('allauth.urls')),
     # Django admin
     url(r'^admin/', admin.site.urls),
+    url(
+        r'^saml2/',
+        include('djangosaml2.urls', namespace='saml2')
+    ),
 ]
