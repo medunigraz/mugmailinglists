@@ -13,6 +13,7 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
+from django.conf import settings
 from django.conf.urls import include, url
 from django.contrib import admin
 from django.urls import reverse_lazy
@@ -33,3 +34,13 @@ urlpatterns = [
         include('djangosaml2.urls', namespace='saml2')
     ),
 ]
+
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns = [
+        #path('__debug__/', include(debug_toolbar.urls)),
+
+        # For django versions before 2.0:
+        url(r'^__debug__/', include(debug_toolbar.urls)),
+
+    ] + urlpatterns

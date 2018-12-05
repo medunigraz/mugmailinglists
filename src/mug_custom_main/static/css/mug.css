@@ -1,0 +1,22 @@
+.mug_header_logo
+{
+	height: 40px;
+	margin-top: -10px;
+}
+
+.mug_header_text
+{
+}
+
+.navbar-default {
+    background-color: #51AE32;
+    border-color: #007B3C;
+}
+
+.navbar-default .navbar-nav > li > a {
+    color: white;
+}
+
+.navbar-default .navbar-brand {
+    color: white;
+}

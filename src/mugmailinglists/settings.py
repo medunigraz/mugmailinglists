@@ -34,6 +34,7 @@ MAILMAN_REST_API_USER = 'restadmin'
 # Application definition
 
 INSTALLED_APPS = [
+    'mug_custom_main',
     'hyperkitty',
     'postorius',
     'django_mailman3',
@@ -55,9 +56,11 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     #'django_mailman3.lib.auth.fedora',
+    'debug_toolbar',
 ]
 
 MIDDLEWARE = [
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -65,11 +68,14 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
     'django.middleware.locale.LocaleMiddleware',
     'django_mailman3.middleware.TimezoneMiddleware',
     'postorius.middleware.PostoriusMiddleware',
 ]
+
+INTERNAL_IPS = (
+    '127.0.0.1',
+)
 
 ROOT_URLCONF = 'mugmailinglists.urls'
 
