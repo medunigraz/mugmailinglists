@@ -417,6 +417,10 @@ LOGGING = {
             'handlers': ['console'],
             'level': 'INFO',
         },
+        'mug_custom_main': {
+            'handlers': ['console'],
+            'level': 'INFO',
+        },
     },
     'formatters': {
         'verbose': {
@@ -449,6 +453,13 @@ FILTER_VHOST = False
 
 POSTORIUS_TEMPLATE_BASE_URL = 'http://localhost:8000'
 
+#ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
+#ACCOUNT_EMAIL_REQUIRED = True
+#ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+#ACCOUNT_EMAIL_VERIFICATION = 'none'
+#ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'http'
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_EMAIL_REQUIRED = True
 
 if 'DJANGO_LOCAL_CONFIGURATION' in os.environ:
     filename = os.path.abspath(os.environ.get('DJANGO_LOCAL_CONFIGURATION'))
