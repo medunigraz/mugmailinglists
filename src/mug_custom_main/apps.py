@@ -99,6 +99,7 @@ class MugCustomMainConfig(AppConfig):
     @receiver(post_authenticated) #saml2
     def post_authenticated_called(session_info, **kwargs):
         logger.info(' --- post_authenticated_called: ' + session_info.__str__())
+        avaobj = session_info.ava
         logger.info(' --- post_authenticated_called user: ')
-        logger.info(' --- post_authenticated_called mail: ')
+        logger.info(' --- post_authenticated_called mail: ' + avaobj)
 
