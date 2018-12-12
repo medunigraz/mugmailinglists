@@ -29,6 +29,30 @@ class MugCustomMainConfig(AppConfig):
         from django.core.signals import request_finished
         #request_finished.connect(self.request_callback)
 
+    def user_login(self, user, email):
+        logger.info(' --- user_logged_in common - username: ' + user)
+        logger.info(' --- user_logged_in common - email: ' + email)
+
+        emailsForUser = EmailAddress.objects.filter(user=user)
+        logger.info('      --- email for user: ' + emailsForUser.__str__())
+        logger.info('      --- email for user: ' + str(len(emailsForUser)))
+
+        isPrimary = False
+        if len(emailsForUser) <= 0:
+            isPrimary = True
+
+        currentEMail = None
+        try:
+            currentEMail = EmailAddress.objects.get(email=user.email)
+            logger.info('      --- E-Mail already exists...')
+        except EmailAddress.DoesNotExist:
+            currentEMail = None
+            logger.info('      --- E-Mail not exists! - create new one')
+
+        if currentEMail is None:
+            newEMail = EmailAddress.objects.create(user=user, email=user.email, verified=True, primary=isPrimary)
+            logger.info('      --- new EMail: ' + newEMail.__str__())
+            newEMail.save()
 
 
     #@staticmethod
@@ -67,27 +91,8 @@ class MugCustomMainConfig(AppConfig):
 
         logger.info(' --- user_logged_in - user.username: ' + user.username)
         logger.info(' --- user_logged_in - user.email: ' + user.email)
+        self.user_login(user = user.username, email = user.email)
 
-        emailsForUser = EmailAddress.objects.filter(user=user)
-        logger.info('      --- email for user: ' + emailsForUser.__str__())
-        logger.info('      --- email for user: ' + str(len(emailsForUser)))
-
-        isPrimary = False
-        if len(emailsForUser) <= 0:
-            isPrimary = True
-
-        currentEMail = None
-        try:
-            currentEMail = EmailAddress.objects.get(email=user.email)
-            logger.info('      --- E-Mail already exists...')
-        except EmailAddress.DoesNotExist:
-            currentEMail = None
-            logger.info('      --- E-Mail not exists! - create new one')
-
-        if currentEMail is None:
-            newEMail = EmailAddress.objects.create(user=user, email=user.email, verified=True, primary=isPrimary)
-            logger.info('      --- new EMail: ' + newEMail.__str__())
-            newEMail.save()
 
 
     @receiver(pre_user_save) #saml2
@@ -101,10 +106,8 @@ class MugCustomMainConfig(AppConfig):
         logger.info(' --- post_authenticated_called: ' + session_info.__str__())
         avaobj = session_info["ava"]
         logger.info(' --- post_authenticated_called mail: ' + avaobj.__str__())
-        #uidobj = session_info["uid"]
-        logger.info(' --- post_authenticated_called user: ' + avaobj["uid"].__str__())
-        logger.info(' --- post_authenticated_called user: ' + avaobj["mail"].__str__())
         logger.info(' --- post_authenticated_called user: ' + avaobj["uid"][0])
         logger.info(' --- post_authenticated_called user: ' + avaobj["mail"][0])
+        self.user_login(user = avaobj["uid"][0], email = avaobj["mail"][0])
 
 
