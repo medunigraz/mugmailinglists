@@ -104,5 +104,7 @@ class MugCustomMainConfig(AppConfig):
         #uidobj = session_info["uid"]
         logger.info(' --- post_authenticated_called user: ' + avaobj["uid"].__str__())
         logger.info(' --- post_authenticated_called user: ' + avaobj["mail"].__str__())
+        logger.info(' --- post_authenticated_called user: ' + avaobj["uid"][0])
+        logger.info(' --- post_authenticated_called user: ' + avaobj["mail"][0])
 
 
