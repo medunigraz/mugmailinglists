@@ -56,8 +56,8 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     #'django_mailman3.lib.auth.fedora',
-    'debug_toolbar',
     'djangosaml2',
+    'debug_toolbar',
 ]
 
 MIDDLEWARE = [

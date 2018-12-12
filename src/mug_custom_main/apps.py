@@ -13,6 +13,9 @@ from allauth.account.signals import email_changed
 from allauth.account.signals import user_signed_up
 from allauth.account.signals import user_logged_in
 
+from djangosaml2.signals import pre_user_save
+from djangosaml2.signals import post_authenticated
+
 from django.utils import translation
 
 logger = logging.getLogger(__name__)
@@ -86,4 +89,14 @@ class MugCustomMainConfig(AppConfig):
             logger.info('      --- new EMail: ' + newEMail.__str__())
             newEMail.save()
 
+
+    @receiver(pre_user_save) #saml2
+    def pre_user_save_called(attributes, user_modified, **kwargs):
+        logger.info(' --- pre_user_save_called: ' + attributes.__str__())
+        logger.info(' --- pre_user_save_called: ' + attributes.__str__())
+
+
+    @receiver(post_authenticated) #saml2
+    def post_authenticated_called(session_info, **kwargs):
+        logger.info(' --- pre_user_save_called: ' + session_info.__str__())
 
