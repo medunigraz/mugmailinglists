@@ -13,6 +13,8 @@ from allauth.account.signals import email_changed
 from allauth.account.signals import user_signed_up
 from allauth.account.signals import user_logged_in
 
+from django.utils import translation
+
 logger = logging.getLogger(__name__)
 
 class MugCustomMainConfig(AppConfig):
@@ -23,6 +25,7 @@ class MugCustomMainConfig(AppConfig):
 
         from django.core.signals import request_finished
         #request_finished.connect(self.request_callback)
+
 
 
     #@staticmethod

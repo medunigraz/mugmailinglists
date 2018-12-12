@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     #'django_mailman3.lib.auth.fedora',
     'debug_toolbar',
+    'djangosaml2',
 ]
 
 MIDDLEWARE = [
@@ -71,6 +72,7 @@ MIDDLEWARE = [
     'django.middleware.locale.LocaleMiddleware',
     'django_mailman3.middleware.TimezoneMiddleware',
     'postorius.middleware.PostoriusMiddleware',
+    'mug_custom_main.middleware.MUGLocaleMiddleware',
 ]
 
 INTERNAL_IPS = (
@@ -115,6 +117,9 @@ CACHES = {
 SAML_CREATE_UNKNOWN_USER = True
 SAML_ATTRIBUTE_MAPPING = {
     'uid': ('username', ),
+    'mail': ('email', ),
+    'givenName': ('first_name', ),
+    'surname': ('last_name', ),
 }
 SAML_LOGOUT_REQUEST_PREFERRED_BINDING = saml2.BINDING_HTTP_POST
 SAML_CONFIG = {
