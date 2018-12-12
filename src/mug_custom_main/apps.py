@@ -92,11 +92,11 @@ class MugCustomMainConfig(AppConfig):
 
     @receiver(pre_user_save) #saml2
     def pre_user_save_called(attributes, user_modified, **kwargs):
-        logger.info(' --- pre_user_save_called: ' + attributes.__str__())
-        logger.info(' --- pre_user_save_called: ' + attributes.__str__())
+        logger.info(' --- pre_user_save_called - attributes: ' + attributes.__str__())
+        logger.info(' --- pre_user_save_called - user_modified: ' + user_modified.__str__())
 
 
     @receiver(post_authenticated) #saml2
     def post_authenticated_called(session_info, **kwargs):
-        logger.info(' --- pre_user_save_called: ' + session_info.__str__())
+        logger.info(' --- post_authenticated_called: ' + session_info.__str__())
 
