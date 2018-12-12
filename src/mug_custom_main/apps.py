@@ -100,5 +100,5 @@ class MugCustomMainConfig(AppConfig):
     def post_authenticated_called(session_info, **kwargs):
         logger.info(' --- post_authenticated_called: ' + session_info.__str__())
         logger.info(' --- post_authenticated_called user: ' + session_info.ava.uid)
-        logger.info(' --- post_authenticated_called user: ' + session_info.ava.mail)
+        logger.info(' --- post_authenticated_called mail: ' + session_info.ava.mail)
 
