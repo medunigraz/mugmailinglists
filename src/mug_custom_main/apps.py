@@ -29,7 +29,7 @@ class MugCustomMainConfig(AppConfig):
         from django.core.signals import request_finished
         #request_finished.connect(self.request_callback)
 
-    def user_login(self, user, email):
+    def user_login(user, email):
         logger.info(' --- user_logged_in common - username: ' + user)
         logger.info(' --- user_logged_in common - email: ' + email)
 
@@ -91,7 +91,7 @@ class MugCustomMainConfig(AppConfig):
 
         logger.info(' --- user_logged_in - user.username: ' + user.username)
         logger.info(' --- user_logged_in - user.email: ' + user.email)
-        self.user_login(user = user.username, email = user.email)
+        user_login(user = user.username, email = user.email)
 
 
 
@@ -108,6 +108,6 @@ class MugCustomMainConfig(AppConfig):
         logger.info(' --- post_authenticated_called mail: ' + avaobj.__str__())
         logger.info(' --- post_authenticated_called user: ' + avaobj["uid"][0])
         logger.info(' --- post_authenticated_called user: ' + avaobj["mail"][0])
-        self.user_login(user = avaobj["uid"][0], email = avaobj["mail"][0])
+        user_login(user = avaobj["uid"][0], email = avaobj["mail"][0])
 
 
