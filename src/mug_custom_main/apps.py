@@ -21,31 +21,6 @@ from django.utils import translation
 logger = logging.getLogger(__name__)
 
 
-def mug_known_user_login(user, email):
-    logger.info(' --- user_logged_in common - username: ' + user)
-    logger.info(' --- user_logged_in common - email: ' + email)
-
-    emailsForUser = EmailAddress.objects.filter(user=user)
-    logger.info('      --- email for user: ' + emailsForUser.__str__())
-    logger.info('      --- email for user: ' + str(len(emailsForUser)))
-
-    isPrimary = False
-    if len(emailsForUser) <= 0:
-        isPrimary = True
-
-    currentEMail = None
-    try:
-        currentEMail = EmailAddress.objects.get(email=user.email)
-        logger.info('      --- E-Mail already exists...')
-    except EmailAddress.DoesNotExist:
-        currentEMail = None
-        logger.info('      --- E-Mail not exists! - create new one')
-
-    if currentEMail is None:
-        newEMail = EmailAddress.objects.create(user=user, email=user.email, verified=True, primary=isPrimary)
-        logger.info('      --- new EMail: ' + newEMail.__str__())
-        newEMail.save()
-
 
 class MugCustomMainConfig(AppConfig):
     name = 'mug_custom_main'
@@ -61,6 +36,44 @@ class MugCustomMainConfig(AppConfig):
         #logger.info(' --- Request callback')
         #logger.info(" ---    sender %s" % (sender))
         #logger.info(" ---    kwargs %s" % str(kwargs))
+
+    @staticmethod
+    def mug_known_user_login(user, email):
+        logger.info(' --- user_logged_in common - username: ' + user)
+        logger.info(' --- user_logged_in common - email: ' + email)
+
+        from django.contrib.auth.models import User
+        from allauth.account.models import EmailAddress
+
+        currentUser = None
+        try:
+            currentUser = User.objects.get(username=user)
+            logger.info('      --- User exists - Test EMail...')
+        except User.DoesNotExist:
+            currentUser = None
+            logger.info('      --- User not exists! - exit...')
+
+        if currentUser is not None:
+            emailsForUser = EmailAddress.objects.filter(user=currentUser)
+            logger.info('      --- email for user: ' + emailsForUser.__str__())
+            logger.info('      --- email for user: ' + str(len(emailsForUser)))
+
+            isPrimary = False
+            if len(emailsForUser) <= 0:
+                isPrimary = True
+
+            currentEMail = None
+            try:
+                currentEMail = EmailAddress.objects.get(email=currentUser.email)
+                logger.info('      --- E-Mail already exists...')
+            except EmailAddress.DoesNotExist:
+                currentEMail = None
+                logger.info('      --- E-Mail not exists! - create new one')
+
+            if currentEMail is None:
+                newEMail = EmailAddress.objects.create(user=currentUser, email=currentUser.email, verified=True, primary=isPrimary)
+                logger.info('      --- new EMail: ' + newEMail.__str__())
+                newEMail.save()
 
 
     @receiver(email_added)
@@ -90,10 +103,15 @@ class MugCustomMainConfig(AppConfig):
         from django.contrib.auth.models import User
         from allauth.account.models import EmailAddress
 
+        #from django.contrib.auth.models import User
+        #from allauth.account.models import EmailAddress
+        #emailsForUser = EmailAddress.objects.filter(user=user)
+        #logger.info('      --- email for user: ' + emailsForUser.__str__())
+        #logger.info('      --- email for user: ' + str(len(emailsForUser)))
+
         logger.info(' --- user_logged_in - user.username: ' + user.username)
         logger.info(' --- user_logged_in - user.email: ' + user.email)
-        mug_known_user_login(user = user.username, email = user.email)
-
+        MugCustomMainConfig.mug_known_user_login(user = user.username, email = user.email)
 
 
     @receiver(pre_user_save) #saml2
@@ -109,6 +127,6 @@ class MugCustomMainConfig(AppConfig):
         logger.info(' --- post_authenticated_called mail: ' + avaobj.__str__())
         logger.info(' --- post_authenticated_called user: ' + avaobj["uid"][0])
         logger.info(' --- post_authenticated_called user: ' + avaobj["mail"][0])
-        mug_known_user_login(user = avaobj["uid"][0], email = avaobj["mail"][0])
+        MugCustomMainConfig.mug_known_user_login(user = avaobj["uid"][0], email = avaobj["mail"][0])
 
 
