@@ -31,7 +31,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(
         r'^saml2/',
-        include('djangosaml2.urls', namespace='saml2')
+        include(('djangosaml2.urls', "saml2"), namespace='saml2')
     ),
 ]
 

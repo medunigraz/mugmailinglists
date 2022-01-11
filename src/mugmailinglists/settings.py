@@ -70,6 +70,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.locale.LocaleMiddleware',
+    'djangosaml2.middleware.SamlSessionMiddleware',
     'django_mailman3.middleware.TimezoneMiddleware',
     'postorius.middleware.PostoriusMiddleware',
     'mug_custom_main.middleware.MUGLocaleMiddleware',
@@ -358,10 +359,10 @@ COMPRESS_PRECOMPILERS = (
 #   ('text/less', 'lessc {infile} {outfile}'),
 #   ('text/x-scss', 'sassc -t compressed {infile} {outfile}'),
 #   ('text/x-sass', 'sassc -t compressed {infile} {outfile}'),
-    ('text/x-scss', 'sass -t compressed {infile} {outfile}'),
-    ('text/x-sass', 'sass -t compressed {infile} {outfile}'),
-#    ('text/x-sass', 'django_pyscss.compressor.DjangoScssFilter'),
-#    ('text/x-scss', 'django_pyscss.compressor.DjangoScssFilter'),    
+#    ('text/x-scss', 'sass -t compressed {infile} {outfile}'),
+#    ('text/x-sass', 'sass -t compressed {infile} {outfile}'),
+    ('text/x-sass', 'django_pyscss.compressor.DjangoScssFilter'),
+    ('text/x-scss', 'django_pyscss.compressor.DjangoScssFilter'),
 )
 
 
