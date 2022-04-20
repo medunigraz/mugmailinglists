@@ -3,7 +3,7 @@ Description=Mailman3 - QCluster
 
 [Service]
 Type=simple
-Environment=DJANGO_SETTINGS_MODULE=mugmailinglists.settings
+Environment=DJANGO_SETTINGS_MODULE=medunigraz.mailman.settings
 Environment=DJANGO_LOCAL_CONFIGURATION=/etc/django/mailman.medunigraz.at.py
 Environment=PYTHONPATH=/var/www/wsgi/mailman.medunigraz.at/src
 WorkingDirectory=/var/www/wsgi/mailman.medunigraz.at/src

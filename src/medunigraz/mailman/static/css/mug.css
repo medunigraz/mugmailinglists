@@ -1,0 +1,14 @@
+.navbar-brand img {
+  height: 40px;
+  margin-top: -16px;
+  margin-bottom: -8px;
+}
+
+nav.navbar {
+    background-color: #52B233;
+    border-color: #007934;
+}
+
+nav.navbar .navbar-nav a.nav-link:hover {
+    color: white;
+}

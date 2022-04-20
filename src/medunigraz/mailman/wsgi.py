@@ -1,5 +1,5 @@
 """
-WSGI config for mugmailinglists project.
+WSGI config for medunigraz.mailman project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 

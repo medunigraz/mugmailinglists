@@ -22,11 +22,11 @@ logger = logging.getLogger(__name__)
 
 
 
-class MugCustomMainConfig(AppConfig):
-    name = 'mug_custom_main'
+class MailmanConfig(AppConfig):
+    name = 'medunigraz.mailman'
 
     def ready(self):
-        logger.info(' --- mug_custom_main Ready!!!')
+        logger.info(' --- medunigraz.mailman Ready!!!')
 
         from django.core.signals import request_finished
         #request_finished.connect(self.request_callback)
@@ -38,7 +38,7 @@ class MugCustomMainConfig(AppConfig):
         #logger.info(" ---    kwargs %s" % str(kwargs))
 
     @staticmethod
-    def mug_known_user_login(user, email):
+    def known_user_login(user, email):
         logger.info(' --- user_logged_in common - username: ' + user)
         logger.info(' --- user_logged_in common - email: ' + email)
 
@@ -111,14 +111,12 @@ class MugCustomMainConfig(AppConfig):
 
         logger.info(' --- user_logged_in - user.username: ' + user.username)
         logger.info(' --- user_logged_in - user.email: ' + user.email)
-        MugCustomMainConfig.mug_known_user_login(user = user.username, email = user.email)
-
+        MailmanConfig.known_user_login(user = user.username, email = user.email)
 
     @receiver(pre_user_save) #saml2
     def pre_user_save_called(attributes, user_modified, **kwargs):
         logger.info(' --- pre_user_save_called - attributes: ' + attributes.__str__())
         logger.info(' --- pre_user_save_called - user_modified: ' + user_modified.__str__())
-
 
     @receiver(post_authenticated) #saml2
     def post_authenticated_called(session_info, **kwargs):
@@ -127,6 +125,4 @@ class MugCustomMainConfig(AppConfig):
         logger.info(' --- post_authenticated_called mail: ' + avaobj.__str__())
         logger.info(' --- post_authenticated_called user: ' + avaobj["uid"][0])
         logger.info(' --- post_authenticated_called user: ' + avaobj["mail"][0])
-        MugCustomMainConfig.mug_known_user_login(user = avaobj["uid"][0], email = avaobj["mail"][0])
-
-
+        MailmanConfig.known_user_login(user = avaobj["uid"][0], email = avaobj["mail"][0])
